@@ -28,6 +28,12 @@ const Dashboard = () => {
     setWidgets((prevWidgets) => [...prevWidgets, newId]);
   };
 
+  // Clear all widgets
+  const clearAllWidgets = () => {
+    setWidgets([]); // Reset widgets state to an empty array
+    localStorage.removeItem("dashboard-widgets"); // Optionally, remove widgets from localStorage
+  };
+
   useEffect(() => {
     try {
       const storedWidgets = localStorage.getItem("dashboard-widgets");
@@ -81,6 +87,15 @@ const Dashboard = () => {
           className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
         >
           Add Pie Chart
+        </button>
+      </div>
+
+      <div className="mb-4">
+        <button
+          onClick={clearAllWidgets}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Clear All Widgets
         </button>
       </div>
 
