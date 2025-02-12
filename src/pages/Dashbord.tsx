@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DndContext, closestCenter, DragEndEvent } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -7,14 +7,16 @@ import {
 } from "@dnd-kit/sortable";
 import Widget from "../components/Widget";
 
+const LOCAL_STORAGE_KEY = "dashboard-widgets";
+
 const Dashboard = () => {
-  const [widgets, setWidget] = useState<string[]>([]);
+  const [widgets, setWidgets] = useState<string[]>([]);
 
   // Function to handle drag-and-drop
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
-      setWidget((items) => {
+      setWidgets((items) => {
         const oldIndex = items.indexOf(active.id as string);
         const newIndex = items.indexOf(over.id as string);
         return arrayMove(items, oldIndex, newIndex);
@@ -25,8 +27,34 @@ const Dashboard = () => {
   // Add new widgets
   const addWidget = (type: string) => {
     const newId = `${type}-${Date.now()}-${Math.random()}`; // Ensure unique IDs
-    setWidget((prevWidgets) => [...prevWidgets, newId]);
+    setWidgets((prevWidgets) => [...prevWidgets, newId]);
   };
+
+  // Load widgets safely from localStorage
+  useEffect(() => {
+    try {
+      const storedWidgets = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedWidgets) {
+        const parsedWidgets = JSON.parse(storedWidgets);
+        if (Array.isArray(parsedWidgets)) {
+          setWidgets(parsedWidgets);
+        } else {
+          console.error("Invalid widgets data in localStorage");
+          localStorage.removeItem(LOCAL_STORAGE_KEY);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to load widgets:", error);
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    }
+  }, []);
+
+  // Save widgets to localStorage whenever they change
+  useEffect(() => {
+    if (widgets.length > 0) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(widgets));
+    }
+  }, [widgets]);
 
   return (
     <div className="p-4">
