@@ -7,8 +7,6 @@ import {
 } from "@dnd-kit/sortable";
 import Widget from "../components/Widget";
 
-const LOCAL_STORAGE_KEY = "dashboard-widgets";
-
 const Dashboard = () => {
   const [widgets, setWidgets] = useState<string[]>([]);
 
@@ -30,29 +28,28 @@ const Dashboard = () => {
     setWidgets((prevWidgets) => [...prevWidgets, newId]);
   };
 
-  // Load widgets safely from localStorage
   useEffect(() => {
     try {
-      const storedWidgets = localStorage.getItem(LOCAL_STORAGE_KEY);
+      const storedWidgets = localStorage.getItem("dashboard-widgets");
       if (storedWidgets) {
         const parsedWidgets = JSON.parse(storedWidgets);
         if (Array.isArray(parsedWidgets)) {
           setWidgets(parsedWidgets);
         } else {
           console.error("Invalid widgets data in localStorage");
-          localStorage.removeItem(LOCAL_STORAGE_KEY);
+          localStorage.removeItem("dashboard-widgets");
         }
       }
     } catch (error) {
       console.error("Failed to load widgets:", error);
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
+      localStorage.removeItem("dashboard-widgets");
     }
   }, []);
 
   // Save widgets to localStorage whenever they change
   useEffect(() => {
     if (widgets.length > 0) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(widgets));
+      localStorage.setItem("dashboard-widgets", JSON.stringify(widgets));
     }
   }, [widgets]);
 
@@ -88,8 +85,6 @@ const Dashboard = () => {
       </div>
 
       {/* Widgets Area */}
-
-      {/* Draggable Widgets */}
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={widgets} strategy={verticalListSortingStrategy}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
