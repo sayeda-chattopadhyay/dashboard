@@ -1,53 +1,52 @@
-# React + TypeScript + Vite
+# Dashboard Project
 
-The goal is to build a clean, maintainable, and advanced React dashboard with drag-and-drop functionality, dynamic charts, and data fetched from free APIs.
-functionality
-mode change
-languange change
-contact form
+This project is a draggable and resizable dashboard built using React, TypeScript, and DnD Kit. Users can add different types of charts (Bar, Line, Pie), rearrange them, and persist their layout using local storage.
 
+## Features
 
+- Drag and Drop: Rearrange widgets using DnD Kit.
+- Persistent State: Widgets are saved in localStorage and restored on page reload.
+- Dynamic Widget Addition: Users can add different chart types dynamically.
+- Responsive Layout: Optimized for various screen sizes.
 
+## Installation
 
+## Clone the repository:
 
-## Expanding the ESLint configuration
+git clone https://github.com/your-repo/dashboard.git
+cd dashboard
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Install dependencies:
 
-- Configure the top-level `parserOptions` property like this:
+npm install
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Run the development server:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+npm run dev
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Usage
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Adding Widgets
+
+Click the Add Bar Chart, Add Line Chart, or Add Pie Chart button to add widgets to the dashboard.
+
+## Dragging Widgets
+
+Drag widgets to rearrange their order.
+
+## Data Persistence
+
+The widget layout is saved in localStorage and restored on page reload.
+
+## Troubleshooting
+
+- Widgets Disappear on Refresh
+- Make sure localStorage is not corrupted. Run the following in the browser console:
+  localStorage.removeItem("dashboard-widgets");
+
+- Then refresh the page and try adding widgets again.
+
+## Drag and Drop Not Working
+
+Ensure DnD Kit is properly installed:
+npm install @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
