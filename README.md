@@ -13,7 +13,10 @@ This project is a draggable and resizable dashboard built using React, TypeScrip
 
 ## Clone the repository:
 
-git clone https://github.com/your-repo/dashboard.git
+git clone
+
+- https://github.com/your-repo/dashboard.git
+
 cd dashboard
 
 ## Install dependencies:
@@ -26,15 +29,15 @@ npm run dev
 
 ## Usage
 
-## Adding Widgets
+### Adding Widgets
 
 Click the Add Bar Chart, Add Line Chart, or Add Pie Chart button to add widgets to the dashboard.
 
-## Dragging Widgets
+### Dragging Widgets
 
 Drag widgets to rearrange their order.
 
-## Data Persistence
+### Data Persistence
 
 The widget layout is saved in localStorage and restored on page reload.
 
