@@ -1,27 +1,27 @@
 import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import ErrorBoundary from "./components/ErrorBoundary";
+import { ErrorFallback } from "./components/ErrorBoundary";
 import Navbar from "./components/Navbar";
-//import ErrorBoundary from "./components/ErrorBoundary";
 
 const Home = lazy(() => import("./pages/Home"));
-const Contact = lazy(() => import("./pages/Contact"));
 const Dashboard = lazy(() => import("./pages/Dashbord"));
+const About = lazy(() => import("./pages/About"));
+import { ErrorBoundary } from "react-error-boundary";
 
 function App() {
   return (
-    <div>
+    <div className="px-2">
       <Navbar />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-
+          <Route path="/about" element={<About />} />
           <Route
             path="/dashboard"
             element={
               <ErrorBoundary
-                fallbackUI={<div>Something went wrong in Dashboard</div>}
+                FallbackComponent={ErrorFallback}
+                onReset={() => window.location.reload()}
               >
                 <Dashboard />
               </ErrorBoundary>

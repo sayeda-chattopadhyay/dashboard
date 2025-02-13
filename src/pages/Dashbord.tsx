@@ -5,12 +5,13 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+
 import Widget from "../components/Widget";
 
 const Dashboard = () => {
   const [widgets, setWidgets] = useState<string[]>([]);
 
-  // Function to handle drag-and-drop
+  // Handle Drag and Drop
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
@@ -22,18 +23,19 @@ const Dashboard = () => {
     }
   };
 
-  // Add new widgets
+  // Add a new widget
   const addWidget = (type: string) => {
-    const newId = `${type}-${Date.now()}-${Math.random()}`; // Ensure unique IDs
+    const newId = `${type}-${Date.now()}-${Math.random()}`;
     setWidgets((prevWidgets) => [...prevWidgets, newId]);
   };
 
   // Clear all widgets
   const clearAllWidgets = () => {
-    setWidgets([]); // Reset widgets state to an empty array
-    localStorage.removeItem("dashboard-widgets"); // Optionally, remove widgets from localStorage
+    setWidgets([]);
+    localStorage.removeItem("dashboard-widgets");
   };
 
+  // Load widgets from localStorage
   useEffect(() => {
     try {
       const storedWidgets = localStorage.getItem("dashboard-widgets");
@@ -52,7 +54,7 @@ const Dashboard = () => {
     }
   }, []);
 
-  // Save widgets to localStorage whenever they change
+  // Save widgets to localStorage
   useEffect(() => {
     if (widgets.length > 0) {
       localStorage.setItem("dashboard-widgets", JSON.stringify(widgets));
@@ -60,52 +62,50 @@ const Dashboard = () => {
   }, [widgets]);
 
   return (
-    <div className="p-4">
-      {/* Title and Instruction */}
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      <p className="mb-6 text-lg text-gray-700">
-        Customize your dashboard by adding different types of charts below. You
-        can drag and drop them to reorder.
-      </p>
+    <div className="min-h-screen bg-gray-100 p-6">
+      {/* Header */}
+      <header className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">📊 My Dashboard</h1>
+        <p className="mt-2 text-lg text-gray-600">
+          Drag and drop your widgets to organize your custom dashboard.
+        </p>
+      </header>
 
-      {/* Add Widget Buttons */}
-      <div className="flex gap-4 mb-4">
+      {/* Buttons Section */}
+      <div className="flex flex-wrap gap-4 mb-6">
         <button
           onClick={() => addWidget("BarChart")}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="px-5 py-3 rounded-lg bg-blue-500 text-white font-medium shadow-md hover:bg-blue-600 transition"
         >
-          Add Bar Chart
+          ➕ Add Bar Chart
         </button>
         <button
           onClick={() => addWidget("LineChart")}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          className="px-5 py-3 rounded-lg bg-green-500 text-white font-medium shadow-md hover:bg-green-600 transition"
         >
-          Add Line Chart
+          📈 Add Line Chart
         </button>
         <button
           onClick={() => addWidget("PieChart")}
-          className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
+          className="px-5 py-3 rounded-lg bg-purple-500 text-white font-medium shadow-md hover:bg-purple-600 transition"
         >
-          Add Pie Chart
+          🥧 Add Pie Chart
         </button>
-      </div>
-
-      <div className="mb-4">
         <button
           onClick={clearAllWidgets}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          className="px-5 py-3 rounded-lg bg-red-500 text-white font-medium shadow-md hover:bg-red-600 transition"
         >
-          Clear All Widgets
+          🗑 Clear All
         </button>
       </div>
 
       {/* Widgets Area */}
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={widgets} strategy={verticalListSortingStrategy}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {widgets.length === 0 ? (
-              <p className=" text-gray-700">
-                No widgets added. Click a button above to add one.
+              <p className="text-md text-gray-700 bg-white shadow p-4 rounded-lg">
+                ⚠️ No widgets added. Click a button above to add one.
               </p>
             ) : (
               widgets.map((widgetId) => <Widget key={widgetId} id={widgetId} />)
