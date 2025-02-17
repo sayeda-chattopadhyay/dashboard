@@ -17,7 +17,10 @@ const LineChart = () => {
 
   return (
     <div className="p-4 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-2">Posts Trend</h2>
+      <div className="mb-4">
+        <h2 className="text-2xl font-semibold mb-2">Posts Trend</h2>
+        <p>Displays the price trends of cryptocurrencies over time.</p>
+      </div>
       <ResponsiveContainer width="100%" height={300}>
         <ReLineChart data={data.slice(0, 5)}>
           <XAxis dataKey="name" />

@@ -65,7 +65,14 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-100 p-6">
       {/* Header */}
       <header className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">📊 My Dashboard</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          📊 My Dashboard
+        </h1>
+        <p>
+          This dashboard provides a real-time overview of the top
+          cryptocurrencies, showing price trends, market distribution, and
+          rankings.
+        </p>
         <p className="mt-2 text-lg text-gray-600">
           Drag and drop your widgets to organize your custom dashboard.
         </p>

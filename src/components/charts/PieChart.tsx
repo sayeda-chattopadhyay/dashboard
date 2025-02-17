@@ -23,6 +23,7 @@ const PieChart = () => {
   return (
     <div className="p-4 bg-white rounded shadow-md">
       <h2 className="text-2xl font-semibold mb-2">Posts Distribution</h2>
+      <p>Represents the market share of the top 5 cryptocurrencies.</p>
       <ResponsiveContainer width="100%" height={300}>
         <RePieChat>
           <Pie
